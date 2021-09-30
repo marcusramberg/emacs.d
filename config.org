@@ -318,7 +318,6 @@ Ivy/Counsel/Swiper
       :init
       (projectile-mode +1)
       (setq projectile-project-search-path '("~/Source/" )))
-  )
 #+END_SRC
 
 ** Programming language support and utilities
@@ -351,7 +350,7 @@ A modern on-the-fly syntax checking extension -- absolute essential
   (setq lsp-keymap-prefix "C-c l")
   :hook (
          (python-mode . lsp)
-         (typescript-mode . lsp)
+         (-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
@@ -426,7 +425,7 @@ Use space as leader
       ;; SPC f
       (general-create-definer space-f-leader :prefix "SPC f" :wk "File")
       ;; SPC f f
-      (space-f-leader :keymaps 'normal "f" 'councel-find-file :wk "Find file")
+      (space-f-leader :keymaps 'normal "f" 'counsel-find-file :wk "Find file")
       ;; SPC f r
       (space-f-leader :keymaps 'normal "r" 'counsel-buffer-or-recentf :wk "Recent")
 
