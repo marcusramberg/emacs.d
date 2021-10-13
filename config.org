@@ -13,9 +13,10 @@ prefer, and the change will be made across all programming language
 modes including C, C++, Java, Python etc.
 
 #+BEGIN_SRC emacs-lisp
+  (defvar global/indent-width 2)
   (use-package emacs
     :preface
-    (defvar global/indent-width 2) ; 2 spaces should be enough for anyone
+    (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
     :config
     (setq frame-title-format '("MEmacs")
           frame-resize-pixelwise t
@@ -244,13 +245,25 @@ sequences (e.g. ~\n, \t~).
   (use-package highlight-escape-sequences
     :hook (prog-mode . hes-mode))
 #+END_SRC
+*** Centaur Tabs
+#+BEGIN_SRC emacs-lisp
+  (use-package centaur-tabs
+  :demand
+    :config
+    (centaur-tabs-mode t)
+    :bind
+    ("C-<prior>" . centaur-tabs-backward)
+    ("C-<next>" . centaur-tabs-forward))
+#+END_SRC
 ** Vi keybindings
 Vi is Love, Vi is Life
 #+BEGIN_SRC emacs-lisp
-  (setq evil-want-C-u-scroll t
-        evil-want-keybinding nil
-        evil-shift-width 2)
-  (use-package evil-escape) ;; there is no escape from evil
+    (setq evil-want-C-u-scroll t
+          evil-want-keybinding nil
+          evil-shift-width 2)
+  ;;  (use-package evil-escape) ;; there is no escape from evil
+   (global-set-key [escape] 'keyboard-quit) ;; remaps esc
+
 #+END_SRC
 Evil-collection covers more parts of Emacs that the original Evil
 doesn't support (e.g. Packages buffer, eshell, calendar etc.)
@@ -284,9 +297,10 @@ Ivy/Counsel/Swiper
 #+BEGIN_SRC emacs-lisp
     (use-package vertico
     :init
-    (vertico-mode)
-    )
+    (vertico-mode))
+
   (use-package counsel
+    :diminish
     :after ivy
     :config (counsel-mode))
 
@@ -314,10 +328,11 @@ Ivy/Counsel/Swiper
 #+END_SRC
 *** Projectile
 #+BEGIN_SRC emacs-lisp
-    (use-package projectile
-      :init
-      (projectile-mode +1)
-      (setq projectile-project-search-path '("~/Source/" )))
+  (use-package projectile
+    :diminish
+    :init
+    (projectile-mode +1)
+    (setq projectile-project-search-path '("~/Source/" )))
 #+END_SRC
 
 ** Programming language support and utilities
@@ -350,7 +365,7 @@ A modern on-the-fly syntax checking extension -- absolute essential
   (setq lsp-keymap-prefix "C-c l")
   :hook (
          (python-mode . lsp)
-         (-mode . lsp)
+         (typescript-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
@@ -372,17 +387,26 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
   (use-package markdown-mode
     :hook (markdown-mode . visual-line-mode))
 
+  (use-package typescript-mode)
   (use-package web-mode
     :mode (("\\.html?\\'" . web-mode)
            ("\\.css\\'"   . web-mode)
            ("\\.jsx?\\'"  . web-mode)
-           ("\\.tsx?\\'"  . web-mode)
+;            ("\\.tsx?\\'"  . web-mode)
            ("\\.json\\'"  . web-mode))
     :config
     (setq web-mode-markup-indent-offset global/indent_width) ; HTML
     (setq web-mode-css-indent-offset global/indent_width)    ; CSS
     (setq web-mode-code-indent-offset global/indent_width)   ; JS/JSX/TS/TSX
     (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
+#+END_SRC
+** Apps
+*** Telega.el
+#+BEGIN_SRC emacs-lisp
+  (use-package telega
+    :load-path  "~/emacs.defaut/telega.el"
+    :commands (telega)
+    :defer t)
 #+END_SRC
 ** Miscellaneous
 *** Diminish minor modes
@@ -432,9 +456,14 @@ Use space as leader
       ;; SPC p
       (space-leader :keymaps 'normal "p" 'projectile-command-map :wk "Projectile")
 
+      ;; SPC s
+      (general-create-definer space-s-leader :prefix "SPC s")
+      (space-s-leader :keymaps 'normal "s" 'swiper :wk "Swiper")
+      (general-create-definer space-s-leader :prefix "SPC s")
+      (space-s-leader :keymaps 'normal "p" 'projectile-ripgrep  :wk "rg in project")
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
-      (space-w-leader :keymaps 'normal "s" 'evil-window-split :which-key "Split")
+      (space-w-leader :keymaps 'normal "s" 'evil-window-split :wk "Split")
   )
 
 #+END_SRC
