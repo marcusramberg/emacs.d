@@ -436,30 +436,39 @@ Use space as leader
 
       ;; SPC SPC
       (space-leader :keymaps 'normal "SPC" '(counsel-M-x :which-key "meta-x"))
-      (space-leader :keymaps 'normal "c-SPC" '(smex-major-mode :which-key "smex"))
+      (space-leader :keymaps 'normal "m" '(smex-major-mode :which-key "major meta-x"))
       ;; SPC SPC
       (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
 
       ;; SPC b
-      (general-create-definer space-b-leader :prefix "SPC b" :which-key "Buffer")
+      (general-create-definer space-b-leader :prefix "SPC b")
+      (space-leader :keymaps 'normal "b" '(nil :which-key "Buffer"))
       ;; SPC b b
       (space-b-leader :keymaps 'normal "b" '(counsel-switch-buffer :which-key "Switch buffer"))
-      (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Switch buffer"))
+      (space-b-leader :keymaps 'normal "B" '(counsel-switch-buffer-other-window :which-key "Switch buffer Other Window"))
+      (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Kill buffer"))
+
+      ;; SPC c
+      (general-create-definer space-c-leader :prefix "SPC b")
+      (space-leader :keymaps 'normal "c" '(nil :which-key "Code"))
 
       ;; SPC f
-      (general-create-definer space-f-leader :prefix "SPC f" :which-key "File")
+      (general-create-definer space-f-leader :prefix "SPC f")
+      (space-leader :keymaps 'normal "f" '(nil :which-key "File"))
       ;; SPC f f
       (space-f-leader :keymaps 'normal "f" '(counsel-find-file :which-key "Find file"))
       ;; SPC f r
       (space-f-leader :keymaps 'normal "r" '(counsel-buffer-or-recentf :which-key "Recent"))
 
       ;; SPC h
-      (general-create-definer space-h-leader :prefix "SPC h" :which-key "Help")
+      (general-create-definer space-h-leader :prefix "SPC h")
+      (space-leader :keymaps 'normal "h" '(nil :which-key "Help"))
       ;; SPC h f
       (space-h-leader :keymaps 'normal "f" '(describe-function :which-key "Describe Function"))
 
       ;; SPC o
-      (general-create-definer space-o-leader :prefix "SPC o" :which-key "Open")
+      (general-create-definer space-o-leader :prefix "SPC o")
+      (space-leader :keymaps 'normal "o" '(nil :which-key "Open"))
       (space-o-leader :keymaps 'normal "t" '(telega :which-key "Telega"))
       (space-o-leader :keymaps 'normal "v" '(vterm-other-window :which-key "vterm"))
       ;; SPC p
@@ -467,13 +476,21 @@ Use space as leader
 
       ;; SPC s
       (general-create-definer space-s-leader :prefix "SPC s")
+      (space-leader :keymaps 'normal "s" '(nil :which-key "Search"))
       (space-s-leader :keymaps 'normal "s" '(swiper :which-key "Swiper"))
       (general-create-definer space-s-leader :prefix "SPC s")
       (space-s-leader :keymaps 'normal "p" '(projectile-ripgrep  :which-key "rg in project"))
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
-      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete"))
+      (space-leader :keymaps 'normal "w" '(nil :which-key "Window"))
+      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete "))
+      (space-w-leader :keymaps 'normal "h" '(evil-window-left :which-key "Left"))
+      (space-w-leader :keymaps 'normal "j" '(evil-window-down :which-key "Down"))
+      (space-w-leader :keymaps 'normal "k" '(evil-window-up :which-key "Up"))
+      (space-w-leader :keymaps 'normal "l" '(evil-window-right :which-key "Right"))
       (space-w-leader :keymaps 'normal "s" '(evil-window-split :which-key "Split"))
+      (space-w-leader :keymaps 'normal "v" '(evil-window-vsplit :which-key "Split"))
+      (space-w-leader :keymaps 'normal "w" '(evil-window-prev :which-key "Last"))
   )
 
 #+END_SRC
