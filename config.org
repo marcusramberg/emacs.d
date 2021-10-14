@@ -441,7 +441,7 @@ Use space as leader
       (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
 
       ;; SPC b
-      (general-create-definer space-b-leader :prefix "SPC b")
+      (general-create-definer space-b-leader :prefix "SPC b" :which-key "Buffer")
       ;; SPC b b
       (space-b-leader :keymaps 'normal "b" '(counsel-switch-buffer :which-key "Switch buffer"))
       (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Switch buffer"))
@@ -452,6 +452,11 @@ Use space as leader
       (space-f-leader :keymaps 'normal "f" '(counsel-find-file :which-key "Find file"))
       ;; SPC f r
       (space-f-leader :keymaps 'normal "r" '(counsel-buffer-or-recentf :which-key "Recent"))
+
+      ;; SPC h
+      (general-create-definer space-h-leader :prefix "SPC h" :which-key "Help")
+      ;; SPC h f
+      (space-h-leader :keymaps 'normal "f" '(describe-function :which-key "Describe Function"))
 
       ;; SPC o
       (general-create-definer space-o-leader :prefix "SPC o" :which-key "Open")
