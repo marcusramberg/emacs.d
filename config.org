@@ -255,14 +255,28 @@ sequences (e.g. ~\n, \t~).
     ("C-<prior>" . centaur-tabs-backward)
     ("C-<next>" . centaur-tabs-forward))
 #+END_SRC
+*** Modeline
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :config
+    (setq doom-modeline-project-detection 'relative-from-project)
+    (setq doom-modeline-lsp t)
+  )
+#+END_SRC
 ** Vi keybindings
 Vi is Love, Vi is Life
 #+BEGIN_SRC emacs-lisp
-    (setq evil-want-C-u-scroll t
-          evil-want-keybinding nil
-          evil-shift-width 2)
-  ;;  (use-package evil-escape) ;; there is no escape from evil
-   (global-set-key [escape] 'keyboard-quit) ;; remaps esc
+      (setq evil-want-C-u-scroll t
+            evil-want-keybinding nil
+            evil-shift-width 2
+            evil-vsplit-window-right t
+            evil-split-window-below t
+
+  )
+    ;;  (use-package evil-escape) ;; there is no escape from evil
+     (global-set-key [escape] 'keyboard-quit) ;; remaps esc
 
 #+END_SRC
 Evil-collection covers more parts of Emacs that the original Evil
@@ -432,11 +446,14 @@ Provides us with hints on available keystroke combinations.
 Use space as leader
 #+BEGIN_SRC emacs-lisp
     (use-package general :defer t :config
+      (general-evil-setup)
       (general-create-definer space-leader :prefix "SPC")
 
       ;; SPC SPC
       (space-leader :keymaps 'normal "SPC" '(counsel-M-x :which-key "meta-x"))
       (space-leader :keymaps 'normal "m" '(smex-major-mode :which-key "major meta-x"))
+      (space-leader :keymaps 'normal "v" '(counsel-yank-pop :which-key "paste from kill ring"))
+      (space-leader :keymaps 'normal ":" '(eval-expression :which-key "eval"))
       ;; SPC SPC
       (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
 
