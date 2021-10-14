@@ -404,7 +404,7 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
 *** Telega.el
 #+BEGIN_SRC emacs-lisp
   (use-package telega
-    :load-path  "~/emacs.defaut/telega.el"
+    :load-path  "~/.emacs.default/telega.el"
     :commands (telega)
     :defer t)
 #+END_SRC
@@ -417,6 +417,7 @@ other use-package declarations.
   (use-package diminish
     :demand t)
 #+END_SRC
+
 *** Which-key
 Provides us with hints on available keystroke combinations.
 #+BEGIN_SRC emacs-lisp
@@ -427,43 +428,47 @@ Provides us with hints on available keystroke combinations.
     (setq which-key-idle-delay 0.4
           which-key-idle-secondary-delay 0.4))
 #+END_SRC
-
-** General Space
+*** General Space
 Use space as leader
 #+BEGIN_SRC emacs-lisp
     (use-package general :defer t :config
       (general-create-definer space-leader :prefix "SPC")
 
       ;; SPC SPC
-      (space-leader :keymaps 'normal "SPC" 'smex :wk "meta-x")
-      (space-leader :keymaps 'normal "c-SPC" 'smex-major-mode :wk "meta-x")
+      (space-leader :keymaps 'normal "SPC" '(counsel-M-x :which-key "meta-x"))
+      (space-leader :keymaps 'normal "c-SPC" '(smex-major-mode :which-key "smex"))
       ;; SPC SPC
-      (space-leader :keymaps 'normal "g" 'magit-status :wk "Git status")
+      (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
 
       ;; SPC b
       (general-create-definer space-b-leader :prefix "SPC b")
       ;; SPC b b
-      (space-b-leader :keymaps 'normal "b" 'counsel-switch-buffer :which-key "Switch buffer")
-      (space-b-leader :keymaps 'normal "k" 'kill-current-buffer :which-key "Switch buffer")
+      (space-b-leader :keymaps 'normal "b" '(counsel-switch-buffer :which-key "Switch buffer"))
+      (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Switch buffer"))
 
       ;; SPC f
-      (general-create-definer space-f-leader :prefix "SPC f" :wk "File")
+      (general-create-definer space-f-leader :prefix "SPC f" :which-key "File")
       ;; SPC f f
-      (space-f-leader :keymaps 'normal "f" 'counsel-find-file :wk "Find file")
+      (space-f-leader :keymaps 'normal "f" '(counsel-find-file :which-key "Find file"))
       ;; SPC f r
-      (space-f-leader :keymaps 'normal "r" 'counsel-buffer-or-recentf :wk "Recent")
+      (space-f-leader :keymaps 'normal "r" '(counsel-buffer-or-recentf :which-key "Recent"))
 
+      ;; SPC o
+      (general-create-definer space-o-leader :prefix "SPC o" :which-key "Open")
+      (space-o-leader :keymaps 'normal "t" '(telega :which-key "Telega"))
+      (space-o-leader :keymaps 'normal "v" '(vterm-other-window :which-key "vterm"))
       ;; SPC p
-      (space-leader :keymaps 'normal "p" 'projectile-command-map :wk "Projectile")
+      (space-leader :keymaps 'normal "p" '(projectile-command-map :which-key "Projectile"))
 
       ;; SPC s
       (general-create-definer space-s-leader :prefix "SPC s")
-      (space-s-leader :keymaps 'normal "s" 'swiper :wk "Swiper")
+      (space-s-leader :keymaps 'normal "s" '(swiper :which-key "Swiper"))
       (general-create-definer space-s-leader :prefix "SPC s")
-      (space-s-leader :keymaps 'normal "p" 'projectile-ripgrep  :wk "rg in project")
+      (space-s-leader :keymaps 'normal "p" '(projectile-ripgrep  :which-key "rg in project"))
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
-      (space-w-leader :keymaps 'normal "s" 'evil-window-split :wk "Split")
+      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete"))
+      (space-w-leader :keymaps 'normal "s" '(evil-window-split :which-key "Split"))
   )
 
 #+END_SRC
