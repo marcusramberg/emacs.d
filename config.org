@@ -401,6 +401,7 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
   (use-package markdown-mode
     :hook (markdown-mode . visual-line-mode))
 
+  (use-package terraform-mode)
   (use-package typescript-mode)
   (use-package web-mode
     :mode (("\\.html?\\'" . web-mode)
