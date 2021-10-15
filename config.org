@@ -352,6 +352,10 @@ Ivy/Counsel/Swiper
     (projectile-mode +1)
     (setq projectile-project-search-path '("~/Source/" )))
 #+END_SRC
+*** Ripgrep
+#+BEGIN_SRC emacs-lisp
+(use-package ripgrep)
+ #+END_SRC
 
 ** Programming language support and utilities
 *** Company for auto-completion
@@ -402,22 +406,22 @@ h3...) a more visually pleasing look.
 *** Useful major modes
 Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/TSX/JSON.
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :hook (markdown-mode . visual-line-mode))
+    (use-package markdown-mode
+      :hook (markdown-mode . visual-line-mode))
 
-  (use-package terraform-mode)
-  (use-package typescript-mode)
-  (use-package web-mode
-    :mode (("\\.html?\\'" . web-mode)
-           ("\\.css\\'"   . web-mode)
-           ("\\.jsx?\\'"  . web-mode)
-;            ("\\.tsx?\\'"  . web-mode)
-           ("\\.json\\'"  . web-mode))
-    :config
-    (setq web-mode-markup-indent-offset global/indent_width) ; HTML
-    (setq web-mode-css-indent-offset global/indent_width)    ; CSS
-    (setq web-mode-code-indent-offset global/indent_width)   ; JS/JSX/TS/TSX
-    (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
+    (use-package terraform-mode)
+    (use-package typescript-mode)
+    (use-package web-mode
+      :mode (("\\.html?\\'" . web-mode)
+             ("\\.css\\'"   . web-mode)
+             ("\\.jsx?\\'"  . web-mode)
+              ("\\.tsx?\\'"  . web-mode)
+             ("\\.json\\'"  . web-mode))
+      :config
+      (setq web-mode-markup-indent-offset global/indent_width) ; HTML
+      (setq web-mode-css-indent-offset global/indent_width)    ; CSS
+      (setq web-mode-code-indent-offset global/indent_width)   ; JS/JSX/TS/TSX
+      (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
 #+END_SRC
 ** Apps
 *** Telega.el
