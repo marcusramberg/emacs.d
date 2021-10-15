@@ -217,6 +217,10 @@ Delete intermediate buffers when navigating through dired.
     :config
     (setq custom-file (concat user-emacs-directory "to-be-dumped.el")))
 #+END_SRC
+** y/n not yes/no
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
 * Third-party packages
 
 ** GUI enhancements
@@ -419,9 +423,12 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
 *** Telega.el
 #+BEGIN_SRC emacs-lisp
   (use-package telega
-  ;;  :load-path  "~/.emacs.default/telega.el"
     :commands (telega)
     :defer t)
+#+END_SRC
+*** 0x0
+#+BEGIN_SRC emacs-lisp
+  (use-package 0x0)
 #+END_SRC
 ** Miscellaneous
 *** Diminish minor modes
@@ -448,13 +455,15 @@ Use space as leader
 #+BEGIN_SRC emacs-lisp
     (use-package general :defer t :config
       (general-evil-setup)
-      (general-create-definer space-leader :prefix "SPC")
+      (general-create-definer space-leader :keymaps '(normal visual) :prefix "SPC")
 
       ;; SPC SPC
       (space-leader :keymaps 'normal "SPC" '(counsel-M-x :which-key "meta-x"))
       (space-leader :keymaps 'normal "m" '(smex-major-mode :which-key "major meta-x"))
       (space-leader :keymaps 'normal "v" '(counsel-yank-pop :which-key "paste from kill ring"))
       (space-leader :keymaps 'normal ":" '(eval-expression :which-key "eval"))
+      (space-leader :keymaps 'normal "," '(buffer-menu :which-key "buffers"))
+      (space-leader :keymaps 'normal "." '(previous-buffer :which-key "previous"))
       ;; SPC SPC
       (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
 
@@ -465,6 +474,7 @@ Use space as leader
       (space-b-leader :keymaps 'normal "b" '(counsel-switch-buffer :which-key "Switch buffer"))
       (space-b-leader :keymaps 'normal "B" '(counsel-switch-buffer-other-window :which-key "Switch buffer Other Window"))
       (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Kill buffer"))
+      (space-b-leader :keymaps 'normal "s" '(evil-save :which-key "save"))
 
       ;; SPC c
       (general-create-definer space-c-leader :prefix "SPC b")
@@ -497,7 +507,9 @@ Use space as leader
       (space-leader :keymaps 'normal "s" '(nil :which-key "Search"))
       (space-s-leader :keymaps 'normal "s" '(swiper :which-key "Swiper"))
       (space-s-leader :keymaps 'normal "g" '(counsel-rg :which-key "rg"))
+      (space-s-leader :keymaps 'normal "m" '(counsel-imenu :which-key "menu"))
       (space-s-leader :keymaps 'normal "p" '(projectile-ripgrep  :which-key "rg in project"))
+
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
       (space-leader :keymaps 'normal "w" '(nil :which-key "Window"))
