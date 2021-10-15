@@ -418,7 +418,7 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
 *** Telega.el
 #+BEGIN_SRC emacs-lisp
   (use-package telega
-    :load-path  "~/.emacs.default/telega.el"
+  ;;  :load-path  "~/.emacs.default/telega.el"
     :commands (telega)
     :defer t)
 #+END_SRC
@@ -495,7 +495,7 @@ Use space as leader
       (general-create-definer space-s-leader :prefix "SPC s")
       (space-leader :keymaps 'normal "s" '(nil :which-key "Search"))
       (space-s-leader :keymaps 'normal "s" '(swiper :which-key "Swiper"))
-      (general-create-definer space-s-leader :prefix "SPC s")
+      (space-s-leader :keymaps 'normal "g" '(counsel-rg :which-key "rg"))
       (space-s-leader :keymaps 'normal "p" '(projectile-ripgrep  :which-key "rg in project"))
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
