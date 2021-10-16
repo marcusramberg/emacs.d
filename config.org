@@ -517,7 +517,7 @@ Use space as leader
       ;; SPC w
       (general-create-definer space-w-leader :prefix "SPC w")
       (space-leader :keymaps 'normal "w" '(nil :which-key "Window"))
-      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete "))
+      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete"))
       (space-w-leader :keymaps 'normal "h" '(evil-window-left :which-key "Left"))
       (space-w-leader :keymaps 'normal "j" '(evil-window-down :which-key "Down"))
       (space-w-leader :keymaps 'normal "k" '(evil-window-up :which-key "Up"))
