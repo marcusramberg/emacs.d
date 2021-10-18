@@ -229,6 +229,12 @@ Delete intermediate buffers when navigating through dired.
   (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
   (load-theme 'dracula t)
 #+END_SRC
+*** General.el
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :config
+    (general-evil-setup))
+#+END_SRC
 *** Dashboard welcome page
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -251,20 +257,21 @@ sequences (e.g. ~\n, \t~).
 #+END_SRC
 *** Centaur Tabs
 #+BEGIN_SRC emacs-lisp
-  (use-package centaur-tabs
-  :demand
-    :config
-    (centaur-tabs-mode t)
-    :bind
-    ("C-<prior>" . centaur-tabs-backward)
-    ("C-<next>" . centaur-tabs-forward))
+    (use-package centaur-tabs
+    :demand
+      :config
+      (centaur-tabs-mode t)
+      (general-nvmap
+      "[ t" '(centaur-tabs-backward :wk "prev tab")
+      "] t" '(centaur-tabs-forward :wk "next tab"))
+      )
 #+END_SRC
 *** Modeline
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
     :ensure t
     :init (doom-modeline-mode 1)
-    :config
+   :config
     (setq doom-modeline-project-detection 'relative-from-project)
     (setq doom-modeline-lsp t)
   )
@@ -377,7 +384,13 @@ Use ~C-n~ and ~C-p~ to navigate the tooltip.
 *** Flycheck
 A modern on-the-fly syntax checking extension -- absolute essential
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck :config (global-flycheck-mode +1))
+  (use-package flycheck
+    :config
+    (global-flycheck-mode +1)
+    (general-nvmap
+      "[ e" '(flycheck-previous-error :wk "prev error")
+      "] e" '(flycheck-next-error :wk "next error")
+    ))
 #+END_SRC
 *** LSP
 #+BEGIN_SRC emacs-lisp
@@ -397,11 +410,19 @@ Some minimal org mode tweaks: org-bullets gives our headings (h1, h2,
 h3...) a more visually pleasing look.
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :hook ((org-mode . visual-line-mode)
-           (org-mode . org-indent-mode)))
-
-  (use-package org-evil)
-  (use-package org-bullets :hook (org-mode . org-bullets-mode))
+      :hook ((org-mode . visual-line-mode)
+             (org-mode . org-indent-mode)))
+    (use-package org-evil)
+    (use-package org-bullets :hook (org-mode . org-bullets-mode))
+  (general-nvmap
+      :keymaps 'org-src-mode-map
+      "Z Z" 'org-edit-src-save
+      "Z Q" 'org-edit-src-abort)
+  (general-nvmap
+      :keymaps 'org-capture-mode-map
+      "Z Z" 'org-capture-finalize
+      "Z Q" 'org-capture-kill
+      "C-r" 'org-capture-refile)
 #+END_SRC
 *** Useful major modes
 Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/TSX/JSON.
@@ -454,77 +475,73 @@ Provides us with hints on available keystroke combinations.
     (setq which-key-idle-delay 0.4
           which-key-idle-secondary-delay 0.4))
 #+END_SRC
-*** General Space
+*** Space Menu
 Use space as leader
 #+BEGIN_SRC emacs-lisp
-    (use-package general :defer t :config
-      (general-evil-setup)
-      (general-create-definer space-leader :keymaps '(normal visual) :prefix "SPC")
+  ;; Toplevel
+  (general-nvmap :prefix "SPC"
+   "SPC" '(counsel-M-x :which-key "meta-x")
+   "m" '(smex-major-mode :which-key "major meta-x")
+   "v" '(counsel-yank-pop :which-key "paste from kill ring")
+   "V" '(0x0-dwim :which-key "nopaste")
+   ":" '(eval-expression :which-key "eval")
+   "'" '(org-edit-src-code :which-key "edit org")
+   "," '(buffer-menu :which-key "buffers")
+   "." '(previous-buffer :which-key "previous")
+   "." '(previous-buffer :which-key "previous")
+   "p" '(projectile-command-map :which-key "Projectile")
+   "g" '(magit-status :which-key "Git status"))
 
-      ;; SPC SPC
-      (space-leader :keymaps 'normal "SPC" '(counsel-M-x :which-key "meta-x"))
-      (space-leader :keymaps 'normal "m" '(smex-major-mode :which-key "major meta-x"))
-      (space-leader :keymaps 'normal "v" '(counsel-yank-pop :which-key "paste from kill ring"))
-      (space-leader :keymaps 'normal ":" '(eval-expression :which-key "eval"))
-      (space-leader :keymaps 'normal "," '(buffer-menu :which-key "buffers"))
-      (space-leader :keymaps 'normal "." '(previous-buffer :which-key "previous"))
-      ;; SPC SPC
-      (space-leader :keymaps 'normal "g" '(magit-status :which-key "Git status"))
+  ;; SPC b
+  (general-nvmap :prefix "SPC"
+    "b" '(nil :which-key "Buffer")
+    "b b" '(counsel-switch-buffer :which-key "Switch buffer")
+    "b B" '(counsel-switch-buffer-other-window :which-key "Switch buffer Other Window")
+    "b k" '(kill-current-buffer :which-key "Kill buffer")
+    "b s" '(evil-save :which-key "save"))
 
-      ;; SPC b
-      (general-create-definer space-b-leader :prefix "SPC b")
-      (space-leader :keymaps 'normal "b" '(nil :which-key "Buffer"))
-      ;; SPC b b
-      (space-b-leader :keymaps 'normal "b" '(counsel-switch-buffer :which-key "Switch buffer"))
-      (space-b-leader :keymaps 'normal "B" '(counsel-switch-buffer-other-window :which-key "Switch buffer Other Window"))
-      (space-b-leader :keymaps 'normal "k" '(kill-current-buffer :which-key "Kill buffer"))
-      (space-b-leader :keymaps 'normal "s" '(evil-save :which-key "save"))
+  ;; SPC c
+  (general-nvmap :prefix "SPC"
+  "c" '(nil :which-key "Code"))
 
-      ;; SPC c
-      (general-create-definer space-c-leader :prefix "SPC b")
-      (space-leader :keymaps 'normal "c" '(nil :which-key "Code"))
+  ;; SPC f
+  (general-nvmap :prefix "SPC"
+    "f" '(nil :which-key "File")
+    "f f" '(counsel-find-file :which-key "Find file")
+    "f r" '(counsel-buffer-or-recentf :which-key "Recent"))
 
-      ;; SPC f
-      (general-create-definer space-f-leader :prefix "SPC f")
-      (space-leader :keymaps 'normal "f" '(nil :which-key "File"))
-      ;; SPC f f
-      (space-f-leader :keymaps 'normal "f" '(counsel-find-file :which-key "Find file"))
-      ;; SPC f r
-      (space-f-leader :keymaps 'normal "r" '(counsel-buffer-or-recentf :which-key "Recent"))
+  ;; SPC h
+  (general-nvmap :prefix "SPC"
+    "h" '(nil :which-key "Help")
+    "h f" '(describe-function :which-key "Describe Function")
+    "h m" '(describe-module :which-key "Describe Module")
+    "h p" '(describe-package :which-key "Describe Package"))
 
-      ;; SPC h
-      (general-create-definer space-h-leader :prefix "SPC h")
-      (space-leader :keymaps 'normal "h" '(nil :which-key "Help"))
-      ;; SPC h f
-      (space-h-leader :keymaps 'normal "f" '(describe-function :which-key "Describe Function"))
+  ;; SPC o
+  (general-nvmap :prefix "SPC"
+    "o" '(nil :which-key "Open")
+    "o e" '(eshell :which-key "eshell")
+    "o t" '(telega :which-key "Telega")
+    "o v" '(vterm-other-window :which-key "vterm"))
 
-      ;; SPC o
-      (general-create-definer space-o-leader :prefix "SPC o")
-      (space-leader :keymaps 'normal "o" '(nil :which-key "Open"))
-      (space-o-leader :keymaps 'normal "t" '(telega :which-key "Telega"))
-      (space-o-leader :keymaps 'normal "v" '(vterm-other-window :which-key "vterm"))
-      ;; SPC p
-      (space-leader :keymaps 'normal "p" '(projectile-command-map :which-key "Projectile"))
+  ;; SPC s
+  (general-nvmap :prefix "SPC"
+    "s" '(nil :which-key "Search")
+    "s s" '(swiper :which-key "Swiper")
+    "s g" '(counsel-rg :which-key "rg")
+    "s m" '(counsel-imenu :which-key "menu")
+    "s p" '(projectile-ripgrep  :which-key "rg in project"))
 
-      ;; SPC s
-      (general-create-definer space-s-leader :prefix "SPC s")
-      (space-leader :keymaps 'normal "s" '(nil :which-key "Search"))
-      (space-s-leader :keymaps 'normal "s" '(swiper :which-key "Swiper"))
-      (space-s-leader :keymaps 'normal "g" '(counsel-rg :which-key "rg"))
-      (space-s-leader :keymaps 'normal "m" '(counsel-imenu :which-key "menu"))
-      (space-s-leader :keymaps 'normal "p" '(projectile-ripgrep  :which-key "rg in project"))
-
-      ;; SPC w
-      (general-create-definer space-w-leader :prefix "SPC w")
-      (space-leader :keymaps 'normal "w" '(nil :which-key "Window"))
-      (space-w-leader :keymaps 'normal "d" '(evil-window-delete :which-key "Delete"))
-      (space-w-leader :keymaps 'normal "h" '(evil-window-left :which-key "Left"))
-      (space-w-leader :keymaps 'normal "j" '(evil-window-down :which-key "Down"))
-      (space-w-leader :keymaps 'normal "k" '(evil-window-up :which-key "Up"))
-      (space-w-leader :keymaps 'normal "l" '(evil-window-right :which-key "Right"))
-      (space-w-leader :keymaps 'normal "s" '(evil-window-split :which-key "Split"))
-      (space-w-leader :keymaps 'normal "v" '(evil-window-vsplit :which-key "Split"))
-      (space-w-leader :keymaps 'normal "w" '(evil-window-prev :which-key "Last"))
-  )
+  ;; SPC w
+  (general-nvmap :prefix "SPC"
+  "w" '(nil :which-key "Window")
+  "w d" '(evil-window-delete :which-key "Delete")
+  "w h" '(evil-window-left :which-key "Left")
+  "w j" '(evil-window-down :which-key "Down")
+  "w k" '(evil-window-up :which-key "Up")
+  "w l" '(evil-window-right :which-key "Right")
+  "w s" '(evil-window-split :which-key "Split")
+  "w v" '(evil-window-vsplit :which-key "Split")
+  "w w" '(evil-window-prev :which-key "Last"))
 
 #+END_SRC
