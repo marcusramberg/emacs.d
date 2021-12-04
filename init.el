@@ -54,7 +54,14 @@
     (define-key evil-insert-state-map (kbd "C-n") nil)
     (define-key evil-insert-state-map (kbd "C-p") nil))
   (evil-ex-define-cmd "q" #'kill-this-buffer)
-  (evil-ex-define-cmd "wq" #'global/save-and-kill-this-buffer))
+  (evil-ex-define-cmd "wq" #'global/save-and-kill-this-buffer)
+  :custom
+  (evil-want-C-u-scroll t)
+  (evil-want-keybinding nil)
+  (evil-shift-width 2)
+  (evil-vsplit-window-right t)
+  (evil-split-window-below t)
+  (evil-kill-on-visual-paste nil))
 
 ;; Load main config file "./config.org"
 (require 'org)
