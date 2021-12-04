@@ -1,6 +1,7 @@
 #+Title: MEmacs
 #+Author: Marcus Ramberg
 #+Date: 2021
+#+Property: header-args :tangle yes :comments yes
 
 Trying a bit of a more manual approach. Adopted from yay-evil
 
@@ -257,14 +258,14 @@ sequences (e.g. ~\n, \t~).
 #+END_SRC
 *** Centaur Tabs
 #+BEGIN_SRC emacs-lisp
-    (use-package centaur-tabs
-    :demand
-      :config
-      (centaur-tabs-mode t)
-      (general-nvmap
-      "[ t" '(centaur-tabs-backward :wk "prev tab")
-      "] t" '(centaur-tabs-forward :wk "next tab"))
-      )
+  (use-package centaur-tabs
+  :demand
+    :config
+    (centaur-tabs-mode t)
+    (general-nvmap
+    "[ t" '(centaur-tabs-backward :wk "prev tab")
+    "] t" '(centaur-tabs-forward :wk "next tab"))
+    )
 #+END_SRC
 *** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -279,16 +280,17 @@ sequences (e.g. ~\n, \t~).
 ** Vi keybindings
 Vi is Love, Vi is Life
 #+BEGIN_SRC emacs-lisp
-      (setq evil-want-C-u-scroll t
+  (setq evil-want-C-u-scroll t
             evil-want-keybinding nil
             evil-shift-width 2
             evil-vsplit-window-right t
-            evil-split-window-below t
 
+            evil-split-window-below t
   )
     ;;  (use-package evil-escape) ;; there is no escape from evil
      (global-set-key [escape] 'keyboard-quit) ;; remaps esc
 
+  ;; [[file:config.org::*Vi keybindings][Vi keybindings:2]]
 #+END_SRC
 Evil-collection covers more parts of Emacs that the original Evil
 doesn't support (e.g. Packages buffer, eshell, calendar etc.)
@@ -320,7 +322,7 @@ Tell magit to automatically put us in vi-insert-mode when committing a change.
 *** Ivy
 Ivy/Counsel/Swiper
 #+BEGIN_SRC emacs-lisp
-    (use-package vertico
+  (use-package vertico
     :init
     (vertico-mode))
 
@@ -361,7 +363,7 @@ Ivy/Counsel/Swiper
 #+END_SRC
 *** Ripgrep
 #+BEGIN_SRC emacs-lisp
-(use-package ripgrep)
+  (use-package ripgrep)
  #+END_SRC
 
 ** Programming language support and utilities
@@ -394,16 +396,16 @@ A modern on-the-fly syntax checking extension -- absolute essential
 #+END_SRC
 *** LSP
 #+BEGIN_SRC emacs-lisp
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (
-         (python-mode . lsp)
-         (typescript-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  (use-package lsp-mode
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (
+           (python-mode . lsp)
+           (typescript-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
 #+END_SRC
 *** Org Mode
 Some minimal org mode tweaks: org-bullets gives our headings (h1, h2,
@@ -427,22 +429,22 @@ h3...) a more visually pleasing look.
 *** Useful major modes
 Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/TSX/JSON.
 #+BEGIN_SRC emacs-lisp
-    (use-package markdown-mode
-      :hook (markdown-mode . visual-line-mode))
+  (use-package markdown-mode
+    :hook (markdown-mode . visual-line-mode))
 
-    (use-package terraform-mode)
-    (use-package typescript-mode)
-    (use-package web-mode
-      :mode (("\\.html?\\'" . web-mode)
-             ("\\.css\\'"   . web-mode)
-             ("\\.jsx?\\'"  . web-mode)
-              ("\\.tsx?\\'"  . web-mode)
-             ("\\.json\\'"  . web-mode))
-      :config
-      (setq web-mode-markup-indent-offset global/indent_width) ; HTML
-      (setq web-mode-css-indent-offset global/indent_width)    ; CSS
-      (setq web-mode-code-indent-offset global/indent_width)   ; JS/JSX/TS/TSX
-      (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
+  (use-package terraform-mode)
+  (use-package typescript-mode)
+  (use-package web-mode
+    :mode (("\\.html?\\'" . web-mode)
+           ("\\.css\\'"   . web-mode)
+           ("\\.jsx?\\'"  . web-mode)
+            ("\\.tsx?\\'"  . web-mode)
+           ("\\.json\\'"  . web-mode))
+    :config
+    (setq web-mode-markup-indent-offset 2) ; HTML
+    (setq web-mode-css-indent-offset 2)    ; CSS
+    (setq web-mode-code-indent-offset global/indent_width)   ; JS/JSX/TS/TSX
+    (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
 #+END_SRC
 ** Apps
 *** Telega.el
@@ -543,5 +545,4 @@ Use space as leader
   "w s" '(evil-window-split :which-key "Split")
   "w v" '(evil-window-vsplit :which-key "Split")
   "w w" '(evil-window-prev :which-key "Last"))
-
 #+END_SRC

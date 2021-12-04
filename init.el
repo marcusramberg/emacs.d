@@ -1,5 +1,5 @@
 ;;; init.el --- Emacs init file
-;;  Author: Ian Y.E. Pan && Marcus Ramberg
+;;  Author: Marcus Ramberg
 ;;; Commentary:
 ;;; Remix based on yay emacs
 ;;; Code:
@@ -9,7 +9,7 @@
       gc-cons-percentage 0.6
       file-name-handler-alist nil
       site-run-file nil
-      debug-on-error t) 
+      debug-on-error t)
 
 (defvar ian/gc-cons-threshold 100000000)
 
