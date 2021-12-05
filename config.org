@@ -487,6 +487,7 @@ Use space as leader
    "v" '(counsel-yank-pop :which-key "paste from kill ring")
    "V" '(0x0-dwim :which-key "nopaste")
    ":" '(eval-expression :which-key "eval")
+   ";" '(eval-region :which-key "eval")
    "'" '(org-edit-src-code :which-key "edit org")
    "," '(buffer-menu :which-key "buffers")
    "." '(previous-buffer :which-key "previous")
