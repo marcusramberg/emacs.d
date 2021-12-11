@@ -15,6 +15,7 @@ modes including C, C++, Java, Python etc.
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary: Extracted from config.org
+  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
   (use-package emacs
     :preface
     (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
@@ -393,16 +394,19 @@ A modern on-the-fly syntax checking extension -- absolute essential
 #+END_SRC
 *** LSP
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :init
-    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-    (setq lsp-keymap-prefix "C-c l")
-    :hook (
-           (python-mode . lsp)
-           (typescript-mode . lsp)
-           ;; if you want which-key integration
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
+    (use-package lsp-mode
+      :init
+      ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+      (setq lsp-keymap-prefix "C-c l")
+      :hook (
+             (python-mode . lsp)
+             (typescript-mode . lsp)
+             ;; if you want which-key integration
+             (lsp-mode . lsp-enable-which-key-integration))
+      :commands lsp)
+  (use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 #+END_SRC
 *** Org Mode
 Some minimal org mode tweaks: org-bullets gives our headings (h1, h2,
@@ -430,6 +434,7 @@ Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/T
     :hook (markdown-mode . visual-line-mode))
 
   (use-package terraform-mode)
+  (use-package lua-mode)
   (use-package typescript-mode)
   (use-package web-mode
     :mode (("\\.html?\\'" . web-mode)
