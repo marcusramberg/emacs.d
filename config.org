@@ -14,50 +14,51 @@ prefer, and the change will be made across all programming language
 modes including C, C++, Java, Python etc.
 
 #+BEGIN_SRC emacs-lisp
-  ;;; Commentary: Extracted from config.org
-  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-  (use-package emacs
-    :preface
-    (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
-    :config
-    (setq frame-title-format '("MEmacs")
-          frame-resize-pixelwise t
-          default-directory "~/")
-    (setq visible-bell t)
+   ;;; Commentary:
+   ;;; Extracted from config.org
+   ;;; Code:
+   (use-package emacs
+     :preface
+     (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
+     :config
+     (setq frame-title-format '("MEmacs")
+           frame-resize-pixelwise t
+           default-directory "~/")
+     (setq visible-bell t)
 
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
 
-    ;; better scrolling experience
-    (setq scroll-margin 0
-          scroll-conservatively 101 ; > 100
-          scroll-preserve-screen-position t
-          auto-window-vscroll nil)
+     ;; better scrolling experience
+     (setq scroll-margin 0
+           scroll-conservatively 101 ; > 100
+           scroll-preserve-screen-position t
+           auto-window-vscroll nil)
 
-    ;; Always use spaces for indentation
-    (setq-default indent-tabs-mode nil
-                  tab-width 2)
+     ;; Always use spaces for indentation
+     (setq-default indent-tabs-mode nil
+                   tab-width 2)
 
-    ;; Omit default startup screen
-    (setq inhibit-startup-screen t))
+     ;; Omit default startup screen
+     (setq inhibit-startup-screen t))
 
-  ;; The Emacs default split doesn't seem too intuitive for most users.
-  (use-package emacs
-    :ensure nil
-    :preface
-    (defun global/split-and-follow-horizontally ()
-      "Split window below."
-      (interactive)
-      (split-window-below)
-      (other-window 1))
-    (defun global/split-and-follow-vertically ()
-      "Split window right."
-      (interactive)
-      (split-window-right)
-      (other-window 1))
-    :config
-    (global-set-key (kbd "C-x 2") #'global/split-and-follow-horizontally)
-    (global-set-key (kbd "C-x 3") #'global/split-and-follow-vertically))
+   ;; The Emacs default split doesn't seem too intuitive for most users.
+   (use-package emacs
+     :ensure nil
+     :preface
+     (defun global/split-and-follow-horizontally ()
+       "Split window below."
+       (interactive)
+       (split-window-below)
+       (other-window 1))
+     (defun global/split-and-follow-vertically ()
+       "Split window right."
+       (interactive)
+       (split-window-right)
+       (other-window 1))
+     :config
+     (global-set-key (kbd "C-x 2") #'global/split-and-follow-horizontally)
+     (global-set-key (kbd "C-x 3") #'global/split-and-follow-vertically))
 #+END_SRC
 * Configuration for built-in packages
 Since we're using use-package as our package management system, we
@@ -476,8 +477,8 @@ Provides us with hints on available keystroke combinations.
     :diminish which-key-mode
     :config
     (which-key-mode +1)
-    (setq which-key-idle-delay 0.4
-          which-key-idle-secondary-delay 0.4))
+    (setq which-key-idle-delay 0.3
+          which-key-idle-secondary-delay 0.2))
 #+END_SRC
 *** Space Menu
 Use space as leader
@@ -508,7 +509,8 @@ Use space as leader
 
   ;; SPC c
   (general-nvmap :prefix "SPC"
-  "c" '(nil :which-key "Code"))
+  "c" '(nil :which-key "Code")
+  "c e" '(flycheck-list-errors :which-key "Errors"))
 
   ;; SPC f
   (general-nvmap :prefix "SPC"
@@ -555,4 +557,10 @@ Use space as leader
   "w s" '(evil-window-split :which-key "Split")
   "w v" '(evil-window-vsplit :which-key "Split")
   "w w" '(evil-window-prev :which-key "Last"))
+#+END_SRC
+** config.el
+
+#+BEGIN_SRC emacs-lisp
+  (provide 'config)
+  ;;; config.el ends here
 #+END_SRC
