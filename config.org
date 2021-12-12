@@ -14,51 +14,51 @@ prefer, and the change will be made across all programming language
 modes including C, C++, Java, Python etc.
 
 #+BEGIN_SRC emacs-lisp
-   ;;; Commentary:
-   ;;; Extracted from config.org
-   ;;; Code:
-   (use-package emacs
-     :preface
-     (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
-     :config
-     (setq frame-title-format '("MEmacs")
-           frame-resize-pixelwise t
-           default-directory "~/")
-     (setq visible-bell t)
+  ;;; Commentary:
+  ;;; Extracted from config.org
+  ;;; Code:
+  (use-package emacs
+    :preface
+    (define-key key-translation-map (kbd "<ESC> <ESC>") 'keyboard-escape-quit)
+    :config
+    (setq frame-title-format '("MEmacs")
+          frame-resize-pixelwise t
+          default-directory "~/")
+    (setq visible-bell t)
 
-     (tool-bar-mode -1)
-     (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
 
-     ;; better scrolling experience
-     (setq scroll-margin 0
-           scroll-conservatively 101 ; > 100
-           scroll-preserve-screen-position t
-           auto-window-vscroll nil)
+    ;; better scrolling experience
+    (setq scroll-margin 0
+          scroll-conservatively 101 ; > 100
+          scroll-preserve-screen-position t
+          auto-window-vscroll nil)
 
-     ;; Always use spaces for indentation
-     (setq-default indent-tabs-mode nil
-                   tab-width 2)
+    ;; Always use spaces for indentation
+    (setq-default indent-tabs-mode nil
+                  tab-width 2)
 
-     ;; Omit default startup screen
-     (setq inhibit-startup-screen t))
+    ;; Omit default startup screen
+    (setq inhibit-startup-screen t))
 
-   ;; The Emacs default split doesn't seem too intuitive for most users.
-   (use-package emacs
-     :ensure nil
-     :preface
-     (defun global/split-and-follow-horizontally ()
-       "Split window below."
-       (interactive)
-       (split-window-below)
-       (other-window 1))
-     (defun global/split-and-follow-vertically ()
-       "Split window right."
-       (interactive)
-       (split-window-right)
-       (other-window 1))
-     :config
-     (global-set-key (kbd "C-x 2") #'global/split-and-follow-horizontally)
-     (global-set-key (kbd "C-x 3") #'global/split-and-follow-vertically))
+  ;; The Emacs default split doesn't seem too intuitive for most users.
+  (use-package emacs
+    :ensure nil
+    :preface
+    (defun global/split-and-follow-horizontally ()
+      "Split window below."
+      (interactive)
+      (split-window-below)
+      (other-window 1))
+    (defun global/split-and-follow-vertically ()
+      "Split window right."
+      (interactive)
+      (split-window-right)
+      (other-window 1))
+    :config
+    (global-set-key (kbd "C-x 2") #'global/split-and-follow-horizontally)
+    (global-set-key (kbd "C-x 3") #'global/split-and-follow-vertically))
 #+END_SRC
 * Configuration for built-in packages
 Since we're using use-package as our package management system, we
@@ -227,6 +227,32 @@ Delete intermediate buffers when navigating through dired.
 #+END_SRC
 * Third-party packages
 
+** straight
+Ensure we have the packages
+#+BEGIN_SRC emacs-lisp
+(straight-use-package '0x0)
+(straight-use-package 'centaur-tabs)
+(straight-use-package 'company)
+(straight-use-package 'diminish)
+(straight-use-package 'doom-modeline)
+(straight-use-package 'evil-collection)
+(straight-use-package 'flycheck)
+(straight-use-package 'general)
+(straight-use-package 'lsp-mode)
+(straight-use-package 'lua-mode)
+(straight-use-package 'magit)
+(straight-use-package 'markdown-mode)
+(straight-use-package 'org-bullets)
+(straight-use-package 'org-evil)
+(straight-use-package 'projectile)
+(straight-use-package 'ripgrep)
+(straight-use-package 'telega)
+(straight-use-package 'terraform-mode)
+(straight-use-package 'typescript-mode)
+(straight-use-package 'vertico)
+(straight-use-package 'web-mode)
+(straight-use-package 'which-key)
+#+END_SRC
 ** GUI enhancements
 *** Load themes from folder and install dracula
 #+BEGIN_SRC emacs-lisp
@@ -238,16 +264,6 @@ Delete intermediate buffers when navigating through dired.
   (use-package general
     :config
     (general-evil-setup))
-#+END_SRC
-*** Dashboard welcome page
-#+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner 'logo
-          dashboard-banner-logo-title "MEmacs!"
-          dashboard-items nil
-          dashboard-set-footer nil))
 #+END_SRC
 *** Syntax highlighting
 Lightweight syntax highlighting improvement for numbers and escape
@@ -325,32 +341,32 @@ Ivy/Counsel/Swiper
     :init
     (vertico-mode))
 
-  (use-package counsel
-    :diminish
-    :after ivy
-    :config (counsel-mode))
+  ;; (use-package counsel
+  ;;   :diminish
+  ;;   :after ivy
+  ;;   :config (counsel-mode))
 
-  (use-package ivy
-    :defer 0.1
-    :diminish
-    :bind (("C-c C-r" . ivy-resume)
-           ("C-x B" . ivy-switch-buffer-other-window))
-    :custom
-    (ivy-count-format "(%d/%d) ")
-    (ivy-use-virtual-buffers t)
-    :config (ivy-mode))
+  ;; (use-package ivy
+  ;;   :defer 0.1
+  ;;   :diminish
+  ;;   :bind (("C-c C-r" . ivy-resume)
+  ;;          ("C-x B" . ivy-switch-buffer-other-window))
+  ;;   :custom
+  ;;   (ivy-count-format "(%d/%d) ")
+  ;;   (ivy-use-virtual-buffers t)
+  ;;   :config (ivy-mode))
 
-  (use-package ivy-rich
-    :after ivy
-    :custom
-    (ivy-virtual-abbreviate 'full
-                            ivy-rich-switch-buffer-align-virtual-buffer t
-                            ivy-rich-path-style 'abbrev))
+  ;; (use-package ivy-rich
+  ;;   :after ivy
+  ;;   :custom
+  ;;   (ivy-virtual-abbreviate 'full
+  ;;                           ivy-rich-switch-buffer-align-virtual-buffer t
+  ;;                           ivy-rich-path-style 'abbrev))
 
-  (use-package swiper
-    :after ivy
-    :bind (("C-s" . swiper)
-           ("C-r" . swiper)))
+  ;; (use-package swiper
+  ;;   :after ivy
+  ;;   :bind (("C-s" . swiper)
+  ;;          ("C-r" . swiper)))
 #+END_SRC
 *** Projectile
 #+BEGIN_SRC emacs-lisp
@@ -413,20 +429,22 @@ A modern on-the-fly syntax checking extension -- absolute essential
 Some minimal org mode tweaks: org-bullets gives our headings (h1, h2,
 h3...) a more visually pleasing look.
 #+BEGIN_SRC emacs-lisp
-  (use-package org
-      :hook ((org-mode . visual-line-mode)
-             (org-mode . org-indent-mode)))
-    (use-package org-evil)
-    (use-package org-bullets :hook (org-mode . org-bullets-mode))
-  (general-nvmap
-      :keymaps 'org-src-mode-map
-      "Z Z" 'org-edit-src-save
-      "Z Q" 'org-edit-src-abort)
-  (general-nvmap
-      :keymaps 'org-capture-mode-map
-      "Z Z" 'org-capture-finalize
-      "Z Q" 'org-capture-kill
-      "C-r" 'org-capture-refile)
+    (use-package org
+        :hook ((org-mode . visual-line-mode)
+               (org-mode . org-indent-mode)))
+      (use-package org-evil)
+      (use-package org-bullets :hook (org-mode . org-bullets-mode))
+    (general-nvmap
+        :keymaps 'org-src-mode-map
+        "Z Z" 'org-edit-src-save
+        "Z Q" 'org-edit-src-abort)
+    (general-nvmap
+        :keymaps 'org-capture-mode-map
+        "Z Z" 'org-capture-finalize
+        "Z Q" 'org-capture-kill
+        "C-r" 'org-capture-refile)
+  (setq org-directory "~/org")
+  (add-hook 'after-init-hook 'org-agenda-list)
 #+END_SRC
 *** Useful major modes
 Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/TSX/JSON.
