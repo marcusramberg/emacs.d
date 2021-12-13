@@ -244,12 +244,14 @@ Ensure we have the packages
 (straight-use-package 'markdown-mode)
 (straight-use-package 'org-bullets)
 (straight-use-package 'org-evil)
+(straight-use-package 'ox-hugo)
 (straight-use-package 'projectile)
 (straight-use-package 'ripgrep)
 (straight-use-package 'telega)
 (straight-use-package 'terraform-mode)
 (straight-use-package 'typescript-mode)
 (straight-use-package 'vertico)
+(straight-use-package 'vterm)
 (straight-use-package 'web-mode)
 (straight-use-package 'which-key)
 #+END_SRC
@@ -443,7 +445,7 @@ h3...) a more visually pleasing look.
         "Z Z" 'org-capture-finalize
         "Z Q" 'org-capture-kill
         "C-r" 'org-capture-refile)
-  (setq org-directory "~/org")
+  (setq org-agenda-files '("~/org"))
   (add-hook 'after-init-hook 'org-agenda-list)
 #+END_SRC
 *** Useful major modes

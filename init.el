@@ -38,23 +38,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 (setq package-enable-at-startup nil)
-;; (require 'package)
-
-;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-;; (setq package-enable-at-startup nil)
-;; (package-initialize)
-
-;; ;; workaround bug in Emacs 26.2
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
-;; Setting up the package manager. Install if missing.
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package))
-;; (eval-and-compile
-;;   (setq use-package-always-ensure t))
+(straight-use-package 'evil)
+(straight-use-package 'org)
 (use-package evil
   :diminish undo-tree-mode
   :hook (after-init . evil-mode)
@@ -77,8 +62,6 @@
   (evil-split-window-below t)
   (evil-kill-on-visual-paste nil))
 
-;; Load main config file "./config.org"
-(require 'org)
 (org-babel-load-file (expand-file-name (concat user-emacs-directory "config.org")))
 
 (provide 'init)
