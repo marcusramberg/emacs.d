@@ -12,3 +12,8 @@
 /games/
 /telega.el
 /tramp
+*.elc
+/straight
+/eshell
+projectile.cache
+bookmarks
