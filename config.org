@@ -231,6 +231,7 @@ Delete intermediate buffers when navigating through dired.
 Ensure we have the packages
 #+BEGIN_SRC emacs-lisp
 (straight-use-package '0x0)
+(straight-use-package 'git-auto-commit-mode)
 (straight-use-package 'centaur-tabs)
 (straight-use-package 'company)
 (straight-use-package 'diminish)
@@ -486,7 +487,8 @@ h3...) a more visually pleasing look.
         "Z Q" 'org-capture-kill
         "C-r" 'org-capture-refile)
   (setq org-agenda-files '("~/org"))
-  (add-hook 'after-init-hook 'org-agenda-list)
+  (unless (cl-remove-if-not #'buffer-file-name (buffer-list))
+    (add-hook 'after-init-hook 'org-agenda-list))
 #+END_SRC
 *** Golang mode
 #+BEGIN_SRC emacs-lisp
